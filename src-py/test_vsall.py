@@ -2,7 +2,7 @@
 from os import name
 from resistance.game import Game
 from resistance.mct.mct_agent import MCTAgent
-from resistance.mct.li_agent import Agent
+from resistance.mct.li_agent import MAgent
 from resistance.mct.Beginer import Beginer
 from resistance.random_agent import RandomAgent
 from resistance.mct.greedy_agent import GreedyAgent
@@ -54,7 +54,7 @@ def test(n_game, players):
                         scoreboard[agent.name]['resistance'][0] += 1
                         scoreboard[agent.name]['total'][0] += 1
             if agent.name == "l1" or agent.name == 'l2' or agent.name == 'l3':
-                if agent.I_am_Spy:
+                if agent.is_spy:
                     scoreboard[agent.name]['spy'][1] += 1
                     scoreboard[agent.name]['total'][1] += 1
 
@@ -72,15 +72,19 @@ def test(n_game, players):
             print(agent.name, scoreboard[agent.name])
 
 agents = [      
-                MCTAgent(name='m1', sharedMctNodes={}, isTest=True), 
-                MCTAgent(name='m2', sharedMctNodes={}, isTest=True), 
-                RandomAgent(name = "r1"),
-                RandomAgent(name = "r2"),
-                RandomAgent(name = "r3"),
-                # Agent(name = "l1"),
-                # Agent(name = "l2"),
-                # Agent(name = "l3"),
                 
+                RandomAgent(name = "r1"),
+                # MCTAgent(name='m1', sharedMctNodes={}, isTest=True), 
+                # MCTAgent(name='m2', sharedMctNodes={}, isTest=True), 
+                RandomAgent(name = 'r2'),
+                # MAgent(name = "l1"),
+                # MAgent(name = "l2"),
+                # MAgent(name = "l3"),
+                MCTAgent(name='m1', sharedMctNodes={}, isTest=False), 
+                MCTAgent(name='m2', sharedMctNodes={}, isTest=False), 
+                MCTAgent(name='m3', sharedMctNodes={}, isTest=False),
+                
+                # MCTAgent(name='m3', sharedMctNodes={}, isTest=False), 
             
           ]
 test(1000, agents)                

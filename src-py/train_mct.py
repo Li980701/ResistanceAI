@@ -5,7 +5,7 @@ run the file by `python3 src-py/train_mct.py`
 from os import name
 from resistance.game import Game
 from resistance.mct.mct_agent import MCTAgent
-from resistance.mct.li_agent import Agent
+# from resistance.mct.li_agent import Agent
 from resistance.mct.Beginer import Beginer
 from resistance.random_agent import RandomAgent
 from resistance.mct.greedy_agent import GreedyAgent
@@ -39,11 +39,14 @@ def mix_pretrain(n_game):
     #       Bounder(name='r2'),  
     #       Bounder(name='r3')
     # ]
-    players = [ MCTAgent(name='m1', sharedMctNodes={}, isTest=False), 
-                MCTAgent(name='m2', sharedMctNodes={}, isTest=False), 
+    players = [  
                 RandomAgent(name = "r1"),
                 RandomAgent(name = "r2"),
-                RandomAgent(name = "r3"),
+                
+                MCTAgent(name='m1', sharedMctNodes={}, isTest=False), 
+                MCTAgent(name='m2', sharedMctNodes={}, isTest=False),
+                MCTAgent(name='m3', sharedMctNodes={}, isTest=False), 
+
           ]
     last_save = time.time()
 
@@ -104,4 +107,4 @@ def mix_pretrain(n_game):
 
 
 
-mix_pretrain(1000)
+mix_pretrain(5000)
