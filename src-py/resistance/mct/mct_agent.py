@@ -36,9 +36,10 @@ class MCTAgent(RandomAgent):
         self.mission_index,
         self.player_number,
         self.spylist,
-        mission index 
+        mission 
         ]
-        
+        In propose mission: self.get_state(mission=[self.player_number,])
+        In vote mission: self.get_state(mission=[proposer,] + mission)
         Information was connected by "-" in json file when doing learning
          '''
         # while a trajectory is better, it is hard to store.
@@ -71,7 +72,7 @@ class MCTAgent(RandomAgent):
         return self.player_number in self.spy_list
 
 
-    def propose_mission(self, team_size, betrayals_required = 1):
+    def propose_mission(self, team_size, betrayals_required):
         '''
         expects a team_size list of distinct agents with id between 0 (inclusive) and number_of_players (exclusive)
         to be returned. 
@@ -162,7 +163,6 @@ class MCTAgent(RandomAgent):
         if self.is_spy():
             if not self.currentstate in self.mctNodes:
                 self.mctNodes[self.currentstate] = BaseNode.createBetrayNode()
-            
             mct_action, win_rate =  BaseNode.chooseAction(self.mctNodes[self.currentstate], self.C)   
 
             if self.isTest and (win_rate < 0.5):
@@ -206,7 +206,6 @@ class MCTAgent(RandomAgent):
         '''
         spies_win = not spies_win
         win = (self.is_spy() and spies_win) or ((not self.is_spy()) and (not spies_win))
-
         for node, act in self.trajectory:
             if node:
 

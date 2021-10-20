@@ -20,10 +20,9 @@ def test(n_game, players):
             if type(agent) == MCTAgent:
                 agent.mctNodes = mctnodes
 
-
         game.play()
         for agent in game.agents:
-            if agent.name == "m1" or agent.name == "m2" or agent.name == "m3" or agent.name == "r1" or agent.name == "r2" or agent.name == "r3":
+            if agent.name == "m1" or agent.name == "m2" or agent.name == "m3"or agent.name == "m4" or agent.name == "r1" or agent.name == "r2" or agent.name == "r3":
                 if agent.is_spy():
                     scoreboard[agent.name]['spy'][1] += 1
                     scoreboard[agent.name]['total'][1] += 1
@@ -72,20 +71,19 @@ def test(n_game, players):
             print(agent.name, scoreboard[agent.name])
 
 agents = [      
-                
-                RandomAgent(name = "r1"),
+                RandomAgent(name="r1"),
                 # MCTAgent(name='m1', sharedMctNodes={}, isTest=True), 
                 # MCTAgent(name='m2', sharedMctNodes={}, isTest=True), 
-                RandomAgent(name = 'r2'),
+                RandomAgent(name='r2'),
                 # MAgent(name = "l1"),
                 # MAgent(name = "l2"),
                 # MAgent(name = "l3"),
+                RandomAgent(name='r3'),
                 MCTAgent(name='m1', sharedMctNodes={}, isTest=False), 
                 MCTAgent(name='m2', sharedMctNodes={}, isTest=False), 
                 MCTAgent(name='m3', sharedMctNodes={}, isTest=False),
-                
+                MCTAgent(name='m4', sharedMctNodes={}, isTest=False),
                 # MCTAgent(name='m3', sharedMctNodes={}, isTest=False), 
-            
           ]
 test(1000, agents)                
 

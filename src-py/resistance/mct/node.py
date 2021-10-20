@@ -12,6 +12,9 @@ def getIndexOfList(l):
 
 
 def getPropose(childrenDict, startIndex, playerSize, prefix, missionSize):
+    '''
+    Total Permutation when a preposed is needed 
+    '''
     if startIndex + missionSize > playerSize:
         return
     elif missionSize == 0:
@@ -38,10 +41,12 @@ class BaseNode:
                 # N is how many times of visiting times of current node
             n += children[key][1]
         log_n = log(n)
-            # UCB function
+        # UCB function, balance exploitation and exploration 
         l = [((children[key][0] / children[key][1] + c * sqrt(log_n /  children[key][1])), key) for key in children]
         l.sort()
+        # retrieve the action(True or False)
         action = l[-1][1]
+        # Winning times / Total visited times
         return action, children[key][0] / children[key][1]
 
     @staticmethod

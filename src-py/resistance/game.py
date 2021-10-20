@@ -29,7 +29,7 @@ class Game:
 
         self.num_players = len(agents)
         #allocate spies
-        self.spies = [0,1]
+        self.spies = [0,1,2]
         while len(self.spies) < Agent.spy_count[self.num_players]:
             spy = random.randrange(self.num_players)
             if spy not in self.spies:

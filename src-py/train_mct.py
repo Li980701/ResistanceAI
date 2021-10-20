@@ -42,11 +42,12 @@ def mix_pretrain(n_game):
     players = [  
                 RandomAgent(name = "r1"),
                 RandomAgent(name = "r2"),
-                
+                RandomAgent(name = "r3"),
                 MCTAgent(name='m1', sharedMctNodes={}, isTest=False), 
                 MCTAgent(name='m2', sharedMctNodes={}, isTest=False),
                 MCTAgent(name='m3', sharedMctNodes={}, isTest=False), 
-
+                MCTAgent(name='m4', sharedMctNodes={}, isTest=False), 
+                
           ]
     last_save = time.time()
 
@@ -65,7 +66,7 @@ def mix_pretrain(n_game):
 
         # update score board
         for agent in game.agents:
-            if agent.name == 'm1' or agent.name == 'm2' or agent.name == 'm3' or agent.name == 'r1' or agent.name == 'r2' or agent.name == 'r3' or agent.name == 'r4':
+            if agent.name == 'm1' or agent.name == 'm2' or agent.name == 'm3' or agent.name == 'm4' or agent.name == 'r1' or agent.name == 'r2' or agent.name == 'r3' or agent.name == 'r4':
                 if agent.is_spy():
                     scoreboard[agent.name]['spy'][1] += 1
                     scoreboard[agent.name]['total'][1] += 1
@@ -107,4 +108,4 @@ def mix_pretrain(n_game):
 
 
 
-mix_pretrain(5000)
+mix_pretrain(10000)
