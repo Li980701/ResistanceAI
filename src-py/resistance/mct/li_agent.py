@@ -57,6 +57,8 @@ class MAgent:
             self.spies_alibi.remove(self.id)
     
     def propose_mission(self, team_size, fails_required = 1):
+        if self.rounds_completed == self.curr_round:
+            self.curr_round += 1
         team = []
         team.append(self.id)
         if self.curr_round == 1:
@@ -64,17 +66,20 @@ class MAgent:
                 candidate = random.randint(0, self.num_of_players - 1)
                 if candidate != self.id and candidate not in team:
                     team.append(candidate)
-        if self.is_spy:
+
+        elif self.is_spy:
             resistance = list(set(self.spies_alibi + [self.id]).symmetric_difference(set(self.player)))
+            # print("resistance is ", resistance)
             if fails_required > 1:
                 spy_with_min_misbehavior = self.spies_alibi[0]
-                for i in range(1,self.spies_alibi):
+                for i in range(1,len(self.spies_alibi)):
                     if self.misbehavior[self.spies_alibi[i]] < self.misbehavior[spy_with_min_misbehavior]:
                         spy_with_min_misbehavior = self.spies_alibi[i]
                 team.append(spy_with_min_misbehavior)
             j = 0
             while len(team) < team_size:
                 team.append(resistance[j])
+                j += 1
         else:
             sort = dict(sorted(self.misbehavior.items(), key=lambda item:item[1]))
             sort = list(sort)
@@ -83,6 +88,7 @@ class MAgent:
                 if sort[i] != self.id:
                     team.append(sort[i])
                 i += 1
+        print("agent: ", self.name, " propose a mission based on misbehavior: ", self.misbehavior)
         return team
     def suspects(self):
         sort = dict(sorted(self.misbehavior.items(), key=lambda item:item[1]))
@@ -93,6 +99,8 @@ class MAgent:
         if self.curr_round == self.rounds_completed:
             self.curr_round += 1
         if self.curr_round == 1:
+            if self.name == "Elon1":
+                print("first mission is ", mission)
             return True
         if proposer == self.id:
             return True
@@ -102,6 +110,9 @@ class MAgent:
                 return False
         else:
             suspects = self.suspects()
+            doubt = set(suspects) & set(mission)
+            if self.name == "Elon1":
+                print("agent: ", self.name, " seuspect is ", doubt)
             if len(list(set(suspects) & set(mission))) >= fails_required:
                 return False
         return True
@@ -114,6 +125,9 @@ class MAgent:
                 round_vote.append(True)
             else:
                 round_vote.append(False)
+        if self.name == "Elon1":
+            print("mission takers are: ", mission)
+            print(round_vote)
         self.votes.append(round_vote)
 
     def betray(self, mission, proposer):
@@ -137,6 +151,11 @@ class MAgent:
                         self.misbehavior[k] += 1
                 window += 1
         if mission_success:
+            if self.name == "Elon1":
+                if mission_success:
+                    print("round ", self.curr_round, "reisistance win")
+                else:
+                    print("round ", self.curr_round, "spy won")
             if num_fails >= 1:
                 for i in mission:
                     self.misbehavior[i] += 1
@@ -156,13 +175,19 @@ class MAgent:
     def round_outcome(self, rounds_complete, missions_failed):
         self.rounds_completed = rounds_complete
         self.spies_has_won = missions_failed
+        
     def game_outcome(self, resistance_win, spies):
+    
         if resistance_win:
             if not self.is_spy:
                 self.i_won_as_resis = True
+            if self.name == "Elon1":
+                print("Game over, resistance win")
 
         else:
             if self.is_spy:
                 self.i_won_as_spies = True
+            if self.name == "Elon1":
+                print("Game over, spy win")
 
         return self.i_won_as_resis, self.i_won_as_spies

@@ -28,8 +28,8 @@ class Game:
         # random.shuffle(self.agents)
 
         self.num_players = len(agents)
-        #allocate spies
-        self.spies = [0,1,2]
+        # allocate spies
+        self.spies = [0,1]
         while len(self.spies) < Agent.spy_count[self.num_players]:
             spy = random.randrange(self.num_players)
             if spy not in self.spies:

@@ -3,6 +3,9 @@ from math import log, sqrt
 
 
 def getIndexOfList(l):
+    '''
+    Get the index of list l
+    '''
     k = 1
     ret = 0
     for s in l:
@@ -13,7 +16,7 @@ def getIndexOfList(l):
 
 def getPropose(childrenDict, startIndex, playerSize, prefix, missionSize):
     '''
-    Total Permutation when a preposed is needed 
+    Do a total Permutation when a preposed is needed 
     '''
     if startIndex + missionSize > playerSize:
         return
@@ -30,7 +33,7 @@ class BaseNode:
     '''
     File node is the structure of the MCT tree
     Three types of nodes: Voting Node, Propose Node and Betray Node
-    Action Decision Function: chooseAction(), designed with UBC function with Constance C value 2.0 by default
+    Action Decision Function: chooseAction(), designed with UBC function with Constance C value 1.0 by default
     '''
     @staticmethod
     def chooseAction(children, c):
@@ -55,7 +58,6 @@ class BaseNode:
             True: [0, 0],
             False: [0, 0]
         }
-
         return children
 
     @staticmethod

@@ -18,7 +18,7 @@ class MCTAgent(RandomAgent):
         else:
             self.mctNodes = sharedMctNodes
         # UBC function constant C value. 
-        # Test it and Choose to be 2.65
+        # Test it and Choose to be 1
         self.C = 1
 
         self.trajectory = []
